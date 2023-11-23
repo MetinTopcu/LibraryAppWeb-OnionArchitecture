@@ -8,4 +8,9 @@
     <ProjectReference Include="..\OnionArchitecture.Services.Core.Domain\OnionArchitecture.Services.Core.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
 </Project>
