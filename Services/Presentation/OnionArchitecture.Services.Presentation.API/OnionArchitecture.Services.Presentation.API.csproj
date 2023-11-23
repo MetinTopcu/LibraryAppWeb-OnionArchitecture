@@ -8,5 +8,10 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\OnionArchitecture.Services.Infrastructure.Infrastructure\OnionArchitecture.Services.Infrastructure.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\OnionArchitecture.Services.Infrastructure.Persistence\OnionArchitecture.Services.Infrastructure.Persistence.csproj" />
+  </ItemGroup>
+
 
 </Project>
