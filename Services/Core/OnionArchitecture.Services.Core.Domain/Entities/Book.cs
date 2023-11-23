@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OnionArchitecture.Services.Core.Domain.Entities
 {
-    public class Book : BaseEntity
+    public class Book : BaseEntity, IAggregateRoot
     {
         public string Name { get; set; }
 
