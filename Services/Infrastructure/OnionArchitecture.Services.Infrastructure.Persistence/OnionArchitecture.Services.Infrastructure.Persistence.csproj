@@ -8,4 +8,20 @@
     <ProjectReference Include="..\..\Core\OnionArchitecture.Services.Core.Application\OnionArchitecture.Services.Core.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UnitOfWorks\" />
+    <Folder Include="Seeds\" />
+    <Folder Include="Services\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.32" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.32" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.32">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
 </Project>
