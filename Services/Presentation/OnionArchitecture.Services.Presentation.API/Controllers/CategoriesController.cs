@@ -41,9 +41,9 @@ namespace OnionArchitecture.Services.Presentation.API.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var categories = await _service.GetByIdAsync(id);
-            var categoriesDtos = _mapper.Map<List<CategoryDto>>(categories);
+            var categoriesDtos = _mapper.Map<CategoryDto>(categories);
 
-            return CreateActionResultInstance(ResponseDto<List<CategoryDto>>.Success(categoriesDtos, 200));
+            return CreateActionResultInstance(ResponseDto<CategoryDto>.Success(categoriesDtos, 200));
         }
 
         [HttpPost]

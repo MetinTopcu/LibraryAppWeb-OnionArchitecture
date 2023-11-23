@@ -40,9 +40,9 @@ namespace OnionArchitecture.Services.Presentation.API.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var books = await _service.GetByIdAsync(id);
-            var booksDtos = _mapper.Map<List<BookDto>>(books);
+            var booksDtos = _mapper.Map<BookDto>(books);
 
-            return CreateActionResultInstance(ResponseDto<List<BookDto>>.Success(booksDtos, 200));
+            return CreateActionResultInstance(ResponseDto<BookDto>.Success(booksDtos, 200));
         }
 
         [HttpPost]
