@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="Seeds\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
