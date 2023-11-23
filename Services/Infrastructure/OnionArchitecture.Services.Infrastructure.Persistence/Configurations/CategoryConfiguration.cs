@@ -13,7 +13,7 @@ namespace OnionArchitecture.Services.Infrastructure.Persistence.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).UseIdentityColumn();
-            builder.Property(x => x.Name).IsRequired(); // null olamaz
+            builder.Property(x => x.Name).IsRequired().HasMaxLength(100); // null olamaz
 
             builder.ToTable("Categories");
         }

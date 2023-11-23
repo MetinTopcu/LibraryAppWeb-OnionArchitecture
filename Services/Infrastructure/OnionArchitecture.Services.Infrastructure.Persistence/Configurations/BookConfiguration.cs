@@ -13,9 +13,11 @@ namespace OnionArchitecture.Services.Infrastructure.Persistence.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).UseIdentityColumn();
-            builder.Property(x => x.Name).IsRequired(); // null olamaz
+            builder.Property(x => x.Name).IsRequired().HasMaxLength(150); // null olamaz
             builder.Property(x => x.Stock).IsRequired(); // null olamaz
-            builder.Property(x => x.Price).IsRequired(); // null olamaz
+            builder.Property(x => x.Price).IsRequired().HasColumnType("decimal(18,2)"); // null olamaz
+
+            builder.HasOne(x => x.Category).WithMany(x => x.Books).HasForeignKey(x => x.CategoryId);
 
             builder.ToTable("Books");
         }
