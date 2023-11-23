@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\OnionArchitecture.Services.Core.Domain\OnionArchitecture.Services.Core.Domain.csproj" />
   </ItemGroup>
 
