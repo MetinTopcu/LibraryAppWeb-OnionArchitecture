@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.32">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -16,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\OnionArchitecture.Shared\OnionArchitecture.Shared.csproj" />
     <ProjectReference Include="..\..\Infrastructure\OnionArchitecture.Services.Infrastructure.Infrastructure\OnionArchitecture.Services.Infrastructure.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\OnionArchitecture.Services.Infrastructure.Persistence\OnionArchitecture.Services.Infrastructure.Persistence.csproj" />
   </ItemGroup>
