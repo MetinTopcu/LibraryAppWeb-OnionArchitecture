@@ -6,6 +6,7 @@ using OnionArchitecture.Services.Core.Application.Services;
 using OnionArchitecture.Services.Core.Domain.Entities;
 using OnionArchitecture.Shared.ControllerBases;
 using OnionArchitecture.Shared.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,9 +47,12 @@ namespace OnionArchitecture.Services.Presentation.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save(BookDto bookDto)
+        public async Task<IActionResult> Save(BookCreateDto bookCreateDto)
         {
-            var books = await _service.AddAsync(_mapper.Map<Book>(bookDto));
+            var books = _mapper.Map<Book>(bookCreateDto);
+
+            books.CreatedDate = DateTime.Now;
+            await _service.AddAsync(books);
 
             var booksDtos = _mapper.Map<BookDto>(books);
 
@@ -56,9 +60,12 @@ namespace OnionArchitecture.Services.Presentation.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(BookDto bookDto)
+        public async Task<IActionResult> Update(BookUpdateDto bookUpdateDto)
         {
-            await _service.UpdateAsync(_mapper.Map<Book>(bookDto));
+            var books = _mapper.Map<Book>(bookUpdateDto);
+
+            books.UpdateDate = DateTime.Now;
+            await _service.UpdateAsync(books);
 
             return CreateActionResultInstance(ResponseDto<NoContentDto>.Success(204));
         }
