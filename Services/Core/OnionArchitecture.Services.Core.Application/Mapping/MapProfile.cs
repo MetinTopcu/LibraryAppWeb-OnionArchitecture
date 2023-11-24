@@ -13,6 +13,9 @@ namespace OnionArchitecture.Services.Core.Application.Mapping
         {
             CreateMap<Book, BookDto>().ReverseMap();
             CreateMap<Category, CategoryDto>().ReverseMap();
+
+            CreateMap<Book, BookCreateDto>().ReverseMap();
+            CreateMap<Book, BookUpdateDto>().ReverseMap();
         }
     }
 }
