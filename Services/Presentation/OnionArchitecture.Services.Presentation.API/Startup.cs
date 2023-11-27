@@ -43,12 +43,13 @@ namespace OnionArchitecture.Services.Presentation.API
 
             services.AddControllers(options =>  options.Filters.Add(new ValidaterFilterAttribute()) ).AddFluentValidation(options => options.RegisterValidatorsFromAssemblyContaining<BookDtoValidator>());
 
-            services.Configure<ApiBehaviorOptions>(options =>
+            services.Configure<ApiBehaviorOptions>(options =>//api'nin default olarak döndüðü filterini kapatýyoruz.
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
 
             services.AddScoped(typeof(NotFoundFilter<>));
+
             services.AddAutoMapper(typeof(MapProfile));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
