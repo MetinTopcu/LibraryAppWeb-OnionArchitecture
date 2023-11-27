@@ -76,7 +76,7 @@ namespace OnionArchitecture.Services.Presentation.API
             }
 
             app.UseHttpsRedirection();
-            app.UseCustomException();
+            app.UseCustomException(); // Özel Middleware
             app.UseRouting();
 
             app.UseAuthorization();
