@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,10 +13,13 @@ using OnionArchitecture.Services.Core.Application.Mapping;
 using OnionArchitecture.Services.Core.Application.Repositories;
 using OnionArchitecture.Services.Core.Application.Services;
 using OnionArchitecture.Services.Core.Application.UnitOfWorks;
+using OnionArchitecture.Services.Core.Application.Validations;
 using OnionArchitecture.Services.Infrastructure.Persistence;
 using OnionArchitecture.Services.Infrastructure.Persistence.Repositories;
 using OnionArchitecture.Services.Infrastructure.Persistence.Services;
 using OnionArchitecture.Services.Infrastructure.Persistence.UnitOfWorks;
+using OnionArchitecture.Services.Presentation.API.Filters;
+using OnionArchitecture.Services.Presentation.API.Middlewares;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +40,15 @@ namespace OnionArchitecture.Services.Presentation.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddControllers(options =>  options.Filters.Add(new ValidaterFilterAttribute()) ).AddFluentValidation(options => options.RegisterValidatorsFromAssemblyContaining<BookDtoValidator>());
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
+            services.AddScoped(typeof(NotFoundFilter<>));
             services.AddAutoMapper(typeof(MapProfile));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -52,8 +65,6 @@ namespace OnionArchitecture.Services.Presentation.API
                 //configure.MigrationsAssembly("OnionArchitecture.Services.Infrastructure.Persistence");
                 configure.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name); // tip güvenli hali
             }));
-
-            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,7 +76,7 @@ namespace OnionArchitecture.Services.Presentation.API
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCustomException();
             app.UseRouting();
 
             app.UseAuthorization();
