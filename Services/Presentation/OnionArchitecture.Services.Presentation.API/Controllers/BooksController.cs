@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnionArchitecture.Services.Core.Application.Dtos;
 using OnionArchitecture.Services.Core.Application.Services;
 using OnionArchitecture.Services.Core.Domain.Entities;
+using OnionArchitecture.Services.Presentation.API.Filters;
 using OnionArchitecture.Shared.ControllerBases;
 using OnionArchitecture.Shared.Dtos;
 using System;
@@ -36,7 +37,7 @@ namespace OnionArchitecture.Services.Presentation.API.Controllers
             return CreateActionResultInstance(ResponseDto<List<BookDto>>.Success(booksDtos, 200));
         }
 
-
+        [ServiceFilter(typeof(NotFoundFilter<Book>))] //metoda girmeden yakalıyor id null olduğunu
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -63,6 +64,7 @@ namespace OnionArchitecture.Services.Presentation.API.Controllers
         public async Task<IActionResult> Update(BookUpdateDto bookUpdateDto)
         {
             var books = _mapper.Map<Book>(bookUpdateDto);
+            BookDto bookDto = new BookDto();
 
             books.UpdateDate = DateTime.Now;
             await _service.UpdateAsync(books);
@@ -70,6 +72,7 @@ namespace OnionArchitecture.Services.Presentation.API.Controllers
             return CreateActionResultInstance(ResponseDto<NoContentDto>.Success(204));
         }
 
+        [ServiceFilter(typeof(NotFoundFilter<Book>))] //metoda girmeden yakalıyor id null olduğunu
         [HttpDelete("{id}")]  //id belirtiyoruz ki api/books/5  5 id li veriyi siler.
         public async Task<IActionResult> Remove(int id)
         {
