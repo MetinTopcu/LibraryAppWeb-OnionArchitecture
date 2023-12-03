@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace OnionArchitecture.Services.Presentation.API
@@ -41,7 +42,12 @@ namespace OnionArchitecture.Services.Presentation.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers(options =>  options.Filters.Add(new ValidaterFilterAttribute()) ).AddFluentValidation(options => options.RegisterValidatorsFromAssemblyContaining<BookDtoValidator>());
+            services.AddControllers(options =>  options.Filters.Add(new ValidaterFilterAttribute()) ).AddFluentValidation(options => options.RegisterValidatorsFromAssemblyContaining<BookDtoValidator>())
+                .AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+            ;
+
+
 
             services.Configure<ApiBehaviorOptions>(options =>//api'nin default olarak döndüðü filterini kapatýyoruz.
             {

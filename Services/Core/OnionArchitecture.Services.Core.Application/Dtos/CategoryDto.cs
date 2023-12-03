@@ -10,6 +10,6 @@ namespace OnionArchitecture.Services.Core.Application.Dtos
     {
         public string Name { get; set; }
 
-        public ICollection<BookDto> Books { get; set; }
+        //public ICollection<BookDto> Books { get; set; }
     }
 }

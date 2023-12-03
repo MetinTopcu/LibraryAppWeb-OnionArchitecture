@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OnionArchitecture.Services.Core.Application.Dtos;
 using OnionArchitecture.Services.Core.Application.Services;
 using OnionArchitecture.Services.Core.Domain.Entities;
@@ -20,17 +21,31 @@ namespace OnionArchitecture.Services.Presentation.API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IBookService _service;
+        private readonly ICategoryService _categoryService;
 
-        public BooksController(IMapper mapper, IBookService service)
+        public BooksController(IMapper mapper, IBookService service, ICategoryService categoryService)
         {
             _mapper = mapper;
             _service = service;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
         public async Task<IActionResult> All()
         {
             var books = await _service.GetAllAsync();
+
+            if(books.Any())
+            {
+                foreach (var book in books)
+                {
+                    book.Category = await _categoryService.Where(y => y.Id == book.CategoryId).FirstAsync();
+                }
+            }
+            else
+            {
+                books = new List<Book>();
+            }
 
             var booksDtos = _mapper.Map<List<BookDto>>(books.ToList());
 
@@ -42,6 +57,13 @@ namespace OnionArchitecture.Services.Presentation.API.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var books = await _service.GetByIdAsync(id);
+
+            //bu kontrole gerek yok çünkü NotFoundFilter kullanıyorum ama genede örnek olsun diye bu projemde tutacağım.
+            if (books != null)
+            {
+                books.Category = await _categoryService.Where(y => y.Id == books.CategoryId).FirstAsync();
+            }
+
             var booksDtos = _mapper.Map<BookDto>(books);
 
             return CreateActionResultInstance(ResponseDto<BookDto>.Success(booksDtos, 200));
@@ -53,6 +75,7 @@ namespace OnionArchitecture.Services.Presentation.API.Controllers
             var books = _mapper.Map<Book>(bookCreateDto);
 
             books.CreatedDate = DateTime.Now;
+            books.Category = await _categoryService.Where(x => x.Id == books.CategoryId).FirstAsync();
             await _service.AddAsync(books);
 
             var booksDtos = _mapper.Map<BookDto>(books);
